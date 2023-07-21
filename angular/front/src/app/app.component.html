@@ -1,0 +1,53 @@
+
+<h2>Select Teams for the Tournament</h2>
+<div class="team-container">
+  <div *ngFor="let team of teams">
+    <label>
+      <div class="custom-checkbox" [class.checked]="selectedTeams.includes(team)">
+        <img class="flag-icon" [src]="team.img" alt="{{ team.name }} Flag">
+      </div>
+      <div [class.selected-team]="selectedTeams.includes(team)">
+        {{ team.name }} ({{ team.short_name }})
+        <input type="checkbox" [checked]="selectedTeams.includes(team)" (change)="toggleTeamSelection(team)">
+      </div>
+    </label>
+  </div>
+</div>
+
+<div *ngIf="selectedTeams.length >= maxTeamsAllowed">
+  <p>You have selected the maximum number of teams ({{ maxTeamsAllowed }}).</p>
+</div>
+
+<h3>Selected Teams:</h3>
+<ul>
+  <li *ngFor="let team of selectedTeams">
+    {{ team.name }} ({{ team.short_name }})
+  </li>
+</ul>
+
+<button (click)="startTournament()" [disabled]="selectedTeams.length !== maxTeamsAllowed">Start Tournament</button>
+
+<div *ngIf="showTournament">
+
+<adn-single-elimination-tree  [tournament]="example" [matchTemplate]="myMatchTemplate" >
+</adn-single-elimination-tree>
+
+<ng-template #myMatchTemplate let-match >
+  <app-match [match]="match" (teamNameClicked)="handleClickEvent($event)"></app-match>
+</ng-template>
+
+<div class="selected-teams-container">
+  <!-- Your existing selected teams display code here -->
+
+  <!-- Display the winner if available -->
+  <div *ngIf="winner" class="winner-container">
+    <h3>Winner</h3>
+    <div class="winner-info">
+      <p>{{ winner.name }}</p>
+      <img [src]="winner.img" alt="{{ winner.name }}" />
+    </div>
+  </div>
+</div>
+
+
+</div>

@@ -1,0 +1,11 @@
+<div class="ngtt__match-wrapper">
+  <div class="ngtt__team-wrapper" *ngFor="let team of match?.teams">
+    <div [class.adn__team-avatar_bg]="!team?.img">
+      <img *ngIf="team?.img" class="adn__team-avatar" src="{{ team?.img }}" />
+    </div>
+    <span class="adn__team-title" (click)="handleClick(team?.name)">{{
+      team?.name
+    }}</span>
+    <div class="ngtt__team-score">{{ team?.score }}</div>
+  </div>
+</div>

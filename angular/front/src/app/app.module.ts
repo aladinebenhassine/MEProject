@@ -11,15 +11,18 @@ import { LoginComponent } from './auth/login.component';
 import { RegisterComponent } from './auth/register.component';
 import { HomeComponent } from './home.component';
 import { AuthGuard } from './auth/auth.guard';
+import { MatchComponent } from './match/match.component';
+import {AdnSingleEliminationTreeModule} from "@adonsio/adn-tournament";
 
 @NgModule({
   declarations: [
-    AppComponent,LoginComponent,RegisterComponent
+    AppComponent,LoginComponent,RegisterComponent,MatchComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    AdnSingleEliminationTreeModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'login', component: LoginComponent },
