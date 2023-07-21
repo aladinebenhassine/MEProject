@@ -11,10 +11,11 @@ import { LoginComponent } from './auth/login.component';
 import { RegisterComponent } from './auth/register.component';
 import { HomeComponent } from './home.component';
 import { AuthGuard } from './auth/auth.guard';
+import { SimilarPlayerComponent } from './similar-player/similar-player.component';
 
 @NgModule({
   declarations: [
-    AppComponent,LoginComponent,RegisterComponent
+    AppComponent,LoginComponent,RegisterComponent, SimilarPlayerComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +25,7 @@ import { AuthGuard } from './auth/auth.guard';
       { path: '', component: HomeComponent },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
+      { path: 'similarPlayer', component: SimilarPlayerComponent },
       //{ path: 'protected', component: ProtectedComponent, canActivate: [AuthGuard] },
       { path: '**', redirectTo: '' }
     ])

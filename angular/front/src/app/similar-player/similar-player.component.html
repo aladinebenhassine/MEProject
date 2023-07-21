@@ -1,0 +1,32 @@
+<!-- player-table.component.html -->
+<div class="container mt-4">
+  <div class="table-container">
+    <h1>Football Betting</h1>
+
+    <div class="form-group">
+      <label for="playerSelect">Select a Player:</label>
+      <select class="form-control" id="playerSelect" [(ngModel)]="selectedPlayer" (ngModelChange)="loadSimilarPlayers()">
+        <option *ngFor="let player of players" [value]="player.Name">{{ player.Name }}</option>
+      </select>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Team</th>
+          <th>Shirt Number</th>
+          <!-- Add other fields you want to display -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of players">
+          <td>{{ player.Name }}</td>
+          <td>{{ player.Team }}</td>
+          <td>{{ player.Shirt_number }}</td>
+          <!-- Add other fields you want to display -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
