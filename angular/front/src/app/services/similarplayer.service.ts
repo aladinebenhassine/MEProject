@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class SimilarplayerService {
 
-  private apiUrl = 'http://192.168.4.60:105/';
+  private apiUrl = 'http://127.0.0.1:105/';
   private playersUrl = this.apiUrl + 'players/';
   private similarPlayersUrl = this.apiUrl + 'getlike/';
 
