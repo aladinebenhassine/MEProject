@@ -13,8 +13,6 @@ body {
   border-radius: 14px;
   padding: 14px;
   background-color: #222; /* Dark background color */
-  color: white;
-
 }
 
 /* Restyle the custom checkbox */
@@ -110,7 +108,7 @@ label .custom-checkbox {
 }
 
 /* Style for the selected teams container */
-ul[cdkDropList] {
+ul {
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
@@ -191,4 +189,9 @@ h2 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
   letter-spacing: 2px;
+}
+
+.dropped {
+  background-color: #4982a1;
+  border: 1px solid #4982a1;
 }

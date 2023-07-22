@@ -24,29 +24,32 @@
   </li>
 </ul>
 -->
-
 <h2>Select Teams for the Tournament</h2>
 <div class="team-container">
-  <div *ngFor="let team of teams">
+  <div *ngFor="let team of teams"  class="draggable-team"   [draggable]="true" (dragstart)="onDragStart($event, team)"
+  [class.dropped]="isTeamDropped(team)"
+
+  >
     <label>
-      <div class="custom-checkbox" [class.checked]="selectedTeams.includes(team)">
+      <div class="custom-checkbox" [class.checked]="isSelected(team)">
         <img class="flag-icon" [src]="team.img" alt="{{ team.name }} Flag">
       </div>
-      <div [class.selected-team]="selectedTeams.includes(team)">
+      <div [class.selected-team]="isSelected(team)">
         {{ team.name }} ({{ team.short_name }})
-        <input type="checkbox" [checked]="selectedTeams.includes(team)" (change)="toggleTeamSelection(team)">
+        <!-- Remove the checkbox input element -->
       </div>
     </label>
   </div>
 </div>
+
 
 <div *ngIf="selectedTeams.length >= maxTeamsAllowed">
   <p>You have selected the maximum number of teams ({{ maxTeamsAllowed }}).</p>
 </div>
 
 <h3>Selected Teams:</h3>
-<ul>
-  <li *ngFor="let team of selectedTeams">
+<ul class="droppable-list" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+  <li *ngFor="let team of selectedTeams" class="draggable-team" (dragstart)="onDragStart($event, team)">
     {{ team.name }} ({{ team.short_name }})
   </li>
 </ul>

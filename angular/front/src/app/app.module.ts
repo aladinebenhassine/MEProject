@@ -13,7 +13,7 @@ import { HomeComponent } from './home.component';
 import { AuthGuard } from './auth/auth.guard';
 import { MatchComponent } from './match/match.component';
 import {AdnSingleEliminationTreeModule} from "@adonsio/adn-tournament";
-import { DragDropModule } from '@angular/cdk/drag-drop';
+// import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     HttpClientModule,
     FormsModule,
     AdnSingleEliminationTreeModule,
-    DragDropModule,
+    // DragDropModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'login', component: LoginComponent },

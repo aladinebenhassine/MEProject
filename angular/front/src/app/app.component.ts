@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { AdnTournament } from "@adonsio/adn-tournament/lib/declarations/interfaces";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ export class AppComponent {
   drawTournament: any[][] = [];
   showTournament: boolean = false;
   winner: any = {};
+  teamsDropped: any[] = [];
 
   example: AdnTournament = {
     rounds: []
@@ -207,48 +209,54 @@ export class AppComponent {
     return dividedArray;
   }
 
+ // Method to check if a team is selected
+ isSelected(team: any) {
+  return this.selectedTeams.includes(team);
+}
 
-  toggleTeamSelection(team: any) {
-    const index = this.selectedTeams.indexOf(team);
-    if (index > -1) {
-      this.selectedTeams.splice(index, 1);
-    } else {
-      if (this.selectedTeams.length < this.maxTeamsAllowed) {
-        this.selectedTeams.push(team);
-      }
-    }
+onTeamDropped(team: any) {
+  const index = this.teams.indexOf(team);
+  if (index > -1) {
+    this.teams.splice(index, 1);
+  }
   }
 
-    // Handle the drag end event
-  onDragEnded() {
-    // Remove any extra selected teams beyond the allowed maximum
-    console.log("asqss")
-
-    if (this.selectedTeams.length > this.maxTeamsAllowed) {
-      this.selectedTeams = this.selectedTeams.slice(0, this.maxTeamsAllowed);
+// Method to handle team selection (same as before)
+toggleTeamSelection(team: any) {
+  const index = this.selectedTeams.indexOf(team);
+  if (index > -1) {
+    this.selectedTeams.splice(index, 1);
+  } else {
+    if (this.selectedTeams.length < this.maxTeamsAllowed) {
+      this.selectedTeams.push(team);
     }
   }
+}
 
-  // Handle the drop event
-  onDrop(event: CdkDragDrop<any[]>) {
-    console.log("tttt")
-    // Check if the item was dropped inside the selected teams list
-    if (event.previousContainer !== event.container) {
-      const draggedTeam = this.teams[event.previousIndex];
+// Method to handle drag start event
+onDragStart(event: DragEvent, team: any) {
+  event.dataTransfer?.setData('text/plain', JSON.stringify(team));
+}
 
-      // Check if the team is already selected, then remove it on drop
-      const indexInSelectedTeams = this.selectedTeams.indexOf(draggedTeam);
-      if (indexInSelectedTeams !== -1) {
-        this.selectedTeams.splice(indexInSelectedTeams, 1);
-      }
-
-      // Add the team to the selected teams array
-      this.selectedTeams.push(draggedTeam);
-
-      // Limit the selected teams to the allowed maximum
-      if (this.selectedTeams.length > this.maxTeamsAllowed) {
-        this.selectedTeams = this.selectedTeams.slice(0, this.maxTeamsAllowed);
-      }
+// Method to handle drag over event
+onDragOver(event: DragEvent) {
+  event.preventDefault();
+}
+isTeamDropped(team: any): boolean {
+  return this.teamsDropped.includes(team);
+}
+// Method to handle drop event
+onDrop(event: DragEvent) {
+  event.preventDefault();
+  const data = event.dataTransfer?.getData('text/plain');
+  if (data) {
+    const team = JSON.parse(data);
+    if (!this.isSelected(team) && this.selectedTeams.length < this.maxTeamsAllowed && !this.isTeamDropped(team)) {
+      this.selectedTeams.push(team);
+      this.teamsDropped.push(team); // Add the team to the teamsDropped array
     }
   }
+}
+
+
 }
