@@ -12,6 +12,7 @@ export class SimilarplayerService {
   private playersUrl = this.apiUrl + 'players/';
   private similarPlayersUrl = this.apiUrl + 'getlike/';
 
+
   constructor(private http: HttpClient) {}
 
   getPlayers(): Observable<string[]> {

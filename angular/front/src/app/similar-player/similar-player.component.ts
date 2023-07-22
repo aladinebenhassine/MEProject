@@ -10,7 +10,9 @@ export class SimilarPlayerComponent implements OnInit {
   players: any[] = [];
   similarPlayers: any[] = [];
   selectedPlayerDetails: any = null;
+  public selectedPlayer: string ='';
 
+  
   constructor(private playerService: SimilarplayerService) {}
 
 
@@ -21,9 +23,9 @@ export class SimilarPlayerComponent implements OnInit {
   loadPlayers(): void {
     this.playerService.getPlayers()
       .subscribe(
-        data => {
-          this.players = data.map(playerName => ({
-            name: playerName,
+        (data: any[]) => { // Assuming data is an array of player names
+          this.players = data.map((playerName: string) => ({
+            Name: playerName, // Make sure to use the correct property name 'Name'
             image: `https://fcb-abj-pre.s3.amazonaws.com/img/jugadors/MESSI.jpg` // Replace with the correct image URL format
           }));
         },
@@ -36,10 +38,17 @@ export class SimilarPlayerComponent implements OnInit {
   loadSimilarPlayers(playerName: string): void {
     this.playerService.getSimilarPlayers(playerName)
       .subscribe(
-        data => {
-          this.similarPlayers = data.map((player: { Name: string; }) => ({
-            name: player.Name,
-            image: `https://fcb-abj-pre.s3.amazonaws.com/img/jugadors/MESSI.jpg` // Replace with the correct image URL format
+        (data :any)=> {
+          console.log('API Response:', data); // Log the API response
+
+          // Parse the JSON string response into an array of objects
+          const similarPlayersData = data.map(JSON.parse);
+
+          // Map the player properties from each object
+          this.similarPlayers = similarPlayersData.map((player:any) => ({
+            name: player.Name[Object.keys(player.Name)[0]],
+            team: player.Team[Object.keys(player.Team)[0]],
+            shirtNumber: player.Shirt_number[Object.keys(player.Shirt_number)[0]]
           }));
         },
         error => {

@@ -1,4 +1,36 @@
 <!-- player-table.component.html -->
+
+<!-- player-table.component.html -->
+<div class="container mt-4">
+  <div class="table-container">
+    <h1>Football Betting</h1>
+
+    <div class="form-group">
+      <label for="playerSelect">Select a Player:</label>
+      <select class="form-control" id="playerSelect" [(ngModel)]="selectedPlayer" (ngModelChange)="loadSimilarPlayers(selectedPlayer)">
+        <option *ngFor="let player of players" [value]="player.Name">{{ player.Name }}</option>
+      </select>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Team</th>
+          <th>Shirt Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let similarplayer of similarPlayers">
+          <td>{{ similarplayer.name }}</td>
+          <td>{{ similarplayer.team }}</td>
+          <td>{{ similarplayer.shirtNumber }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+   <!--   
 <div class="container mt-4">
   <div class="row">
     <div class="col">
@@ -33,8 +65,8 @@
 
       <div *ngIf="selectedPlayerDetails" class="player-details">
         <h3>{{ selectedPlayerDetails.name }}</h3>
-        <!-- Add other player details here -->
       </div>
     </div>
   </div>
 </div>
+ -->
