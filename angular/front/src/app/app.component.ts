@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AdnTournament } from "@adonsio/adn-tournament/lib/declarations/interfaces";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -62,6 +64,39 @@ export class AppComponent {
 
   }
 
+  predictMatch(team1: any, team2: any): any {
+    return [ Math.floor(Math.random() * 5),  Math.floor(Math.random() * 5)]
+
+    const url = 'http://192.168.4.60:105/predict';
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+    // Set the parameters for the POST request
+    const body = new URLSearchParams();
+    body.set('FirstTeam', team1);
+    body.set('SecondTeam', team2);
+
+    // Send the POST request
+    this.http.post<any>(url, body.toString(), { headers }).subscribe(
+      ({data}) => {
+
+          const matchScoreRegex = /Match Score: (.*): (\d+) goals (.*): (\d+) goals/;
+          const match = data.match(matchScoreRegex);
+
+        if (match) {
+            return [match[2], match[4]];
+          } else {
+          console.error('Invalid response format:', data);
+          return [0, 0];
+          }
+
+      },
+      (error) => {
+        console.error('API Error:', error);
+        return [ Math.floor(Math.random() * 5),  Math.floor(Math.random() * 5)]
+      }
+    );
+  }
+
   generateTournamentStructure(teamsPairs: any[]): any[] {
     const tournamentRounds: any[] = [];
     const totalRounds = Math.log2(teamsPairs.length);
@@ -73,9 +108,12 @@ export class AppComponent {
         const team1 = teamsPairs[match].teams[0];
         const team2 = teamsPairs[match].teams[1];
 
+        const scores = this.predictMatch(team1, team2);
+
+        team1.score = scores[0];
+        team1.score = scores[1];
         // Generate random scores for each team
-        team1.score = Math.floor(Math.random() * 5); // Assuming scores are integers between 0 and 4
-        team2.score = Math.floor(Math.random() * 5);
+
 
         // Select the passing team based on the scores
         const passingTeam = team1.score > team2.score ? team1 : team2;
@@ -181,4 +219,36 @@ export class AppComponent {
     }
   }
 
+    // Handle the drag end event
+  onDragEnded() {
+    // Remove any extra selected teams beyond the allowed maximum
+    console.log("asqss")
+
+    if (this.selectedTeams.length > this.maxTeamsAllowed) {
+      this.selectedTeams = this.selectedTeams.slice(0, this.maxTeamsAllowed);
+    }
+  }
+
+  // Handle the drop event
+  onDrop(event: CdkDragDrop<any[]>) {
+    console.log("tttt")
+    // Check if the item was dropped inside the selected teams list
+    if (event.previousContainer !== event.container) {
+      const draggedTeam = this.teams[event.previousIndex];
+
+      // Check if the team is already selected, then remove it on drop
+      const indexInSelectedTeams = this.selectedTeams.indexOf(draggedTeam);
+      if (indexInSelectedTeams !== -1) {
+        this.selectedTeams.splice(indexInSelectedTeams, 1);
+      }
+
+      // Add the team to the selected teams array
+      this.selectedTeams.push(draggedTeam);
+
+      // Limit the selected teams to the allowed maximum
+      if (this.selectedTeams.length > this.maxTeamsAllowed) {
+        this.selectedTeams = this.selectedTeams.slice(0, this.maxTeamsAllowed);
+      }
+    }
+  }
 }

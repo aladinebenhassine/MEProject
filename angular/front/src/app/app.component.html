@@ -1,14 +1,13 @@
-
 <h2>Select Teams for the Tournament</h2>
 <div class="team-container">
-  <div *ngFor="let team of teams">
+  <!-- Use cdkDrag to make the team items draggable from the teams list -->
+  <div *ngFor="let team of teams" cdkDrag class="draggable-team" (cdkDragEnded)="onDragEnded()">
     <label>
       <div class="custom-checkbox" [class.checked]="selectedTeams.includes(team)">
         <img class="flag-icon" [src]="team.img" alt="{{ team.name }} Flag">
       </div>
       <div [class.selected-team]="selectedTeams.includes(team)">
         {{ team.name }} ({{ team.short_name }})
-        <input type="checkbox" [checked]="selectedTeams.includes(team)" (change)="toggleTeamSelection(team)">
       </div>
     </label>
   </div>
@@ -19,15 +18,17 @@
 </div>
 
 <h3>Selected Teams:</h3>
-<ul>
-  <li *ngFor="let team of selectedTeams">
+<ul cdkDropList (cdkDropListDropped)="onDrop($event)">
+  <!-- Use cdkDrag to make the selected team items draggable within the selected teams list -->
+  <li *ngFor="let team of selectedTeams" cdkDrag class="selected-team">
     {{ team.name }} ({{ team.short_name }})
   </li>
 </ul>
 
+
 <button (click)="startTournament()" [disabled]="selectedTeams.length !== maxTeamsAllowed">Start Tournament</button>
 
-<div *ngIf="showTournament">
+<div *ngIf="showTournament && winner">
 
 <adn-single-elimination-tree  [tournament]="example" [matchTemplate]="myMatchTemplate" >
 </adn-single-elimination-tree>

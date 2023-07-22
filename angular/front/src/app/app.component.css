@@ -73,3 +73,77 @@ label .custom-checkbox {
   display: block;
   margin: 0 auto;
 }
+
+/* selectedTeam.component.css */
+
+/* Style for the teams container */
+.team-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Style for each team item in the teams container */
+.draggable-team {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+  cursor: move;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Hover effect for each team item in the teams container */
+.draggable-team:hover {
+  background-color: #eaeaea;
+}
+
+/* Style for the selected teams container */
+ul[cdkDropList] {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 10px;
+  height: 100px;
+}
+
+/* Style for each selected team item in the selected teams container */
+li[cdkDrag] {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: move;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Hover effect for each selected team item in the selected teams container */
+li[cdkDrag]:hover {
+  background-color: #eaeaea;
+}
+
+/* Styling for the checked team item */
+.custom-checkbox.checked {
+  border: 2px solid #008000; /* Green border for checked teams */
+}
+
+/* Style for the team name in the selected teams list */
+.selected-team {
+  font-weight: bold;
+}
+
+/* Style for the message when the maximum number of teams is reached */
+p.warning-message {
+  color: #f44336; /* Red color for the warning message */
+  font-weight: bold;
+}
