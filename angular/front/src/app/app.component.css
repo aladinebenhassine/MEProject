@@ -13,6 +13,8 @@ body {
   border-radius: 14px;
   padding: 14px;
   background-color: #222; /* Dark background color */
+  color: white;
+
 }
 
 /* Restyle the custom checkbox */
@@ -68,6 +70,7 @@ label .custom-checkbox {
   border-radius: 14px;
   padding: 14px;
   background-color: #222;
+  color: white;
 }
 
 .winner-info {
@@ -87,12 +90,6 @@ label .custom-checkbox {
 }
 
 /* selectedTeam.component.css */
-
-/* Style for the teams container */
-.team-container {
-  display: flex;
-  flex-wrap: wrap;
-}
 
 /* Style for each team item in the teams container */
 .draggable-team {
@@ -171,6 +168,13 @@ p.warning-message {
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.btn-submit[disabled] {
+  background-color: #666; /* Dark gray background color for disabled button */
+  color: #ccc; /* Light gray text color for disabled button */
+  border-color: #ccc; /* Light gray border color for disabled button */
+  cursor: not-allowed; /* Show "not-allowed" cursor on disabled button */
 }
 
 /* Style for the "Select Teams for the Tournament" header */
