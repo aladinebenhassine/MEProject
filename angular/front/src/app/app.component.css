@@ -1,8 +1,18 @@
+body {
+  background-color: #222; /* Dark background color */
+  color: #fff; /* Light text color */
+}
+
+
+
 /* Add flexbox to show four teams in a row */
 .team-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  border-radius: 14px;
+  padding: 14px;
+  background-color: #222; /* Dark background color */
 }
 
 /* Restyle the custom checkbox */
@@ -54,8 +64,10 @@ label .custom-checkbox {
 
 .winner-container {
   margin-top: 30px;
-  border: 1px solid #ccc;
   padding: 10px;
+  border-radius: 14px;
+  padding: 14px;
+  background-color: #222;
 }
 
 .winner-info {
@@ -112,6 +124,9 @@ ul[cdkDropList] {
   margin-top: 20px;
   padding: 10px;
   height: 100px;
+  border-radius: 14px;
+  padding: 14px;
+  background-color: #222;
 }
 
 /* Style for each selected team item in the selected teams container */
@@ -146,4 +161,30 @@ li[cdkDrag]:hover {
 p.warning-message {
   color: #f44336; /* Red color for the warning message */
   font-weight: bold;
+}
+
+.btn-submit {
+  background-color: #222; /* Dark background color */
+  color: #fff; /* Light text color */
+  border: 1px solid #fff; /* White border */
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Style for the "Select Teams for the Tournament" header */
+h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222; /* Dark blue background color */
+  color: #fff; /* Light text color */
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
