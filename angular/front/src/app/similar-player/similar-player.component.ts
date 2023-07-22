@@ -8,20 +8,24 @@ import { SimilarplayerService } from '../services/similarplayer.service';
 })
 export class SimilarPlayerComponent implements OnInit {
   players: any[] = [];
-  selectedPlayer: string | undefined;
+  similarPlayers: any[] = [];
+  selectedPlayerDetails: any = null;
 
   constructor(private playerService: SimilarplayerService) {}
 
+
   ngOnInit(): void {
     this.loadPlayers();
-
   }
 
   loadPlayers(): void {
     this.playerService.getPlayers()
       .subscribe(
         data => {
-          this.players = data;
+          this.players = data.map(playerName => ({
+            name: playerName,
+            image: `https://fcb-abj-pre.s3.amazonaws.com/img/jugadors/MESSI.jpg` // Replace with the correct image URL format
+          }));
         },
         error => {
           console.error(error);
@@ -29,20 +33,26 @@ export class SimilarPlayerComponent implements OnInit {
       );
   }
 
-  loadSimilarPlayers(): void {
-    if (this.selectedPlayer) {
-      this.playerService.getSimilarPlayers(this.selectedPlayer)
-        .subscribe(
-          data => {
-            this.players = data.map((player: string) => JSON.parse(player));
-          },
-          error => {
-            console.error(error);
-          }
-        );
-    } else {
-      this.players = [];
-    }
+  loadSimilarPlayers(playerName: string): void {
+    this.playerService.getSimilarPlayers(playerName)
+      .subscribe(
+        data => {
+          this.similarPlayers = data.map((player: { Name: string; }) => ({
+            name: player.Name,
+            image: `https://fcb-abj-pre.s3.amazonaws.com/img/jugadors/MESSI.jpg` // Replace with the correct image URL format
+          }));
+        },
+        error => {
+          console.error(error);
+        }
+      );
   }
 
+  showPlayerDetails(player: any): void {
+    this.selectedPlayerDetails = player;
+  }
+
+  hidePlayerDetails(): void {
+    this.selectedPlayerDetails = null;
+  }
 }
